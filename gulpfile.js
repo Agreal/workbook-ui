@@ -1,17 +1,19 @@
 'use strict';
 
+var dir = 'colorful-clock';
+
+
 var gulp = require('gulp');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var $ = require('gulp-load-plugins')();
 
-
 gulp.task('connect', function () {
     var connect = require('connect');
     var app = connect()
         .use(require('connect-livereload')({ port: 35729 }))
-        .use(connect.static('app'))
-        .use(connect.directory('app'));
+        .use(connect.static(dir))
+        .use(connect.directory(dir));
 
     require('http').createServer(app)
         .listen(9000)
@@ -28,30 +30,28 @@ gulp.task('serve', ['connect'], function () {
 
 
 gulp.task('styles', function () {
-    return gulp.src('app/sass/**/*.scss')
+    return gulp.src(dir + '/sass/**/*.scss')
         .pipe($.compass({
-            css: 'app/styles',
-            sass: 'app/sass',
-            img: 'app/images'
+            css: dir + '/styles',
+            sass: dir + '/sass',
+            img: dir + '/images'
         }))
-        .pipe(gulp.dest('app/styles'))
+        .pipe(gulp.dest(dir + '/styles'))
         .pipe(reload({stream:true}));
 });
-
 
 
 gulp.task('default', ['serve'], function () {
     var server = $.livereload();
 
-    gulp.watch('app/sass/**/*.scss', ['styles']);
+    gulp.watch(dir + '/sass/**/*.scss', ['styles']);
     gulp.watch([
-        'app/*.html',
-        'app/styles/**/*.css',
-        'app/sass/**/*.scss',
-        'app/scripts/**/*.js'
+        dir + '/*.html',
+        dir + '/styles/**/*.css',
+        dir + '/sass/**/*.scss',
+        dir + '/scripts/**/*.js'
     ]).on('change', function (file) {
         server.changed(file.path);
     });
-
 });
 
