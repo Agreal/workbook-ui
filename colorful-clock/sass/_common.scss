@@ -5,3 +5,11 @@ html, body {
     font-size: 14px;
     color: $gray-darker;
 }
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.clearfix {
+  @include pie-clearfix;
+}

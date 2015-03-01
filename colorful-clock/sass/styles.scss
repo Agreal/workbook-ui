@@ -1,2 +1,63 @@
-body{
+@import "common";
+
+ul.clock > li {
+  float: left;
 }
+
+.circle {
+  height: 100px;
+  width: 100px;
+  line-height: 100px;
+  text-align: center;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    border: 10px solid #9cf;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    border: 10px solid #09c;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    clip: rect(0, auto, auto, 50px);
+    z-index: 2;
+  }
+}
+
+.progress {
+  border-radius: 50%;
+  position: absolute;
+  border: 10px solid #09c;
+  clip: rect(0, auto, auto, 50px);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+}
+
+strong {
+  font-size: 3em;
+}
+
+.minute .progress {
+  border-color: #9cf;
+  transform: rotate(108deg);
+}
+
+.second .progress {
+  transform: rotate(108deg);
+}
+
+
