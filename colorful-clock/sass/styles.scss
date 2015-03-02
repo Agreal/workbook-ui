@@ -1,7 +1,10 @@
 @import "common";
 
-ul.clock > li {
-  float: left;
+ul.clock {
+  @include pie-clearfix;
+  & > li {
+    float: left;
+  }
 }
 
 .circle {

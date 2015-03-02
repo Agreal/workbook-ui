@@ -19,6 +19,14 @@ ul {
   clear: both;
 }
 
+ul.clock {
+  *zoom: 1;
+}
+ul.clock:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 ul.clock > li {
   float: left;
 }
