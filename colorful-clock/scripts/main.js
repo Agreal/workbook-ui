@@ -1,5 +1,8 @@
 $(function () {
-    setInterval(initClock().refresh, 1000);
+    var aClock = initClock();
+    aClock.refresh();
+
+    setInterval(aClock.refresh, 1000);
 });
 
 function initClock() {
