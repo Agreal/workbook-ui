@@ -6,92 +6,72 @@ $(function () {
 });
 
 function initClock() {
-    var aClock = clock();
+    var aClock = Clock();
     return {
         refresh: function () {
-            var current = now();
-            aClock.hour.text(current.hour);
-            aClock.minute.text(current.minute);
-            aClock.second.text(current.second);
-
-            aClock.hour.progress(current.hour);
-            aClock.minute.progress(current.minute);
-            aClock.second.progress(current.second);
+            var now = new Date();
+            aClock.hour(now.getHours());
+            aClock.minute(now.getMinutes());
+            aClock.second(now.getSeconds());
         }
     };
 }
 
-function clock() {
+function Clock() {
     var $hour = $('.hour');
     var $minute = $('.minute');
     var $second = $('.second');
+    var setText = function ($obj, text) {
+        $obj.find('strong').text(text);
+    };
+    var setProgress = function ($obj, style) {
+        $obj.find('.progress').css(style);
+    };
     return {
-        hour: {
-            text: function (hour) {
-                $hour.find('strong').text(hour);
-            },
-            progress: function (hour) {
-                $hour.find('.progress').css(rotatedHourStyle(hour, '#09c', '#9cf'));
-            }
+        hour: function (hour) {
+            setText($hour, hour);
+            var hourResult = handleHour(hour);
+            setProgress($hour, getRotatedStyle(hourResult.deg, hourResult.color));
         },
-        minute: {
-            text: function (hour) {
-                $minute.find('strong').text(hour);
-            },
-            progress: function (minute) {
-                $minute.find('.progress').css(rotatedSecondStyle(minute, '#09c', '#9cf'));
-            }
+        minute: function (minute) {
+            setText($minute, minute);
+            var minuteResult = handleMinute(minute);
+            setProgress($minute, getRotatedStyle(minuteResult.deg, minuteResult.color));
         },
-        second: {
-            text: function (hour) {
-                $second.find('strong').text(hour);
-            },
-            progress: function (second) {
-                $second.find('.progress').css(rotatedSecondStyle(second, '#09c', '#9cf'));
-            }
+        second: function (second) {
+            setText($second, second);
+            var secondResult = handleSecond(second);
+            setProgress($second, getRotatedStyle(secondResult.deg, secondResult.color));
         }
     };
 }
 
-function now() {
-    var date = new Date();
-    return {
-        hour: date.getHours(),
-        minute: date.getMinutes(),
-        second: date.getSeconds()
-    };
+function handleHour(hour) {
+    var lessHalf = hour < 6;
+    var deg = getDeg(lessHalf, hour, 360 / 12);
+    var color = getHourColor(lessHalf, '#9cf', '#09c');
+    return {deg: deg, color: color};
+}
+function handleMinute(minute) {
+    var lessHalf = minute < 30;
+    var deg = getDeg(lessHalf, minute, 360 / 60);
+    var color = getHourColor(lessHalf, '#9cf', '#09c');
+    return {deg: deg, color: color};
+}
+function handleSecond(second) {
+    var lessHalf = second < 30;
+    var deg = getDeg(lessHalf, second, 360 / 60);
+    var color = getHourColor(lessHalf, '#9cf', '#09c');
+    return {deg: deg, color: color};
 }
 
-function rotatedHourStyle(second, darkerColor, lighterColor) {
-    var unitDeg, deg, color;
-
-    unitDeg = 360 / 12;
-
-    if (second < 6) {
-        deg = unitDeg * second;
-        color = lighterColor;
-    } else {
-        deg = unitDeg * second + 180;
-        color = darkerColor;
-    }
-
-    return getRotatedStyle(deg, color);
+function getDeg(lessHalf, times, unitDeg) {
+    var deg = unitDeg * times;
+    return lessHalf ? deg : deg - 180;
 }
 
-function rotatedSecondStyle(second, darkerColor, lighterColor) {
-    var unitDeg, deg, color;
-
-    unitDeg = 360 / 60;
-
-    if (second < 30) {
-        deg = unitDeg * second;
-        color = lighterColor;
-    } else {
-        deg = unitDeg * second + 180;
-        color = darkerColor;
-    }
-
-    return getRotatedStyle(deg, color);
+function getHourColor(lessHalf, lighterColor, darkerColor) {
+    return lessHalf ? lighterColor : darkerColor;
 }
 
 function getRotatedStyle(deg, color) {
