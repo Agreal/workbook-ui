@@ -1,12 +1,15 @@
 'use strict';
 
-var dir = 'colorful-clock';
+// change directory name here.
+var dir = 'app';
 
 
 var gulp = require('gulp');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var $ = require('gulp-load-plugins')();
+
+var port = 9000;
 
 gulp.task('connect', function () {
     var connect = require('connect');
@@ -16,15 +19,15 @@ gulp.task('connect', function () {
         .use(connect.directory(dir));
 
     require('http').createServer(app)
-        .listen(9000)
+        .listen(port)
         .on('listening', function () {
-            console.log('Started connect web server on http://localhost:9000');
+            console.log('Started connect web server on http://localhost:' + port);
         });
 });
 
 
 gulp.task('serve', ['connect'], function () {
-    require('opn')('http://localhost:9000', 'Google Chrome');
+    require('opn')('http://localhost:' + port, 'Google Chrome');
 });
 
 
