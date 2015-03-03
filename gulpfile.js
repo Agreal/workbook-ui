@@ -41,7 +41,7 @@ gulp.task('styles', function () {
 });
 
 
-gulp.task('default', ['serve'], function () {
+gulp.task('default', ['serve', 'styles'], function () {
     var server = $.livereload();
 
     gulp.watch(dir + '/sass/**/*.scss', ['styles']);

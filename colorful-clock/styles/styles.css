@@ -77,12 +77,3 @@ ul.clock > li {
 strong {
   font-size: 3em;
 }
-
-.minute .progress {
-  border-color: #9cf;
-  transform: rotate(108deg);
-}
-
-.second .progress {
-  transform: rotate(108deg);
-}
