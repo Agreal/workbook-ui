@@ -6,7 +6,7 @@
   "readme": {},
   "dependencies": {},
   "devDependencies": {
-    "browser-sync": "^0.9.1",
+    "browser-sync": "^2.7.1",
     "connect": "^2.14.4",
     "connect-livereload": "^0.4.0",
     "gulp": "^3.8.10",
